@@ -90,7 +90,7 @@ app.get("/profile", (req, res) => {
       res.json({name, email, _id});
     })
   } else {
-    res.json(null)
+    res.json('hi')
   }
 })
 
