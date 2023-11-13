@@ -20,7 +20,22 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-app.use(cors());
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'https://65524688f19bae066f3fe8dd--admirable-praline-0ad70a.netlify.app',
+    // Add other allowed origins here
+  ];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+  }
+
+  next();
+});
 
 app.get('/test', (req, res) => {
   res.json('test ok')
